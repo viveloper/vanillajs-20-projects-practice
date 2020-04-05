@@ -1,29 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const MovieSelector = ({ movieIndex }) => {
-  const movies = [
-    {
-      name: 'Avengers:Endgame',
-      price: 10
-    },
-    {
-      name: 'Joker',
-      price: 12
-    },
-    {
-      name: 'Toy Story 4',
-      price: 8
-    },
-    {
-      name: 'The Lion King',
-      price: 9
-    }
-  ];
-
+const MovieSelector = ({ movies, movieIndex, onChange }) => {
   return (
     <div className="movie-container">
       <label>Pick a movie:</label>
-      <select id="movie">
+      <select id="movie" onChange={(e) => onChange(e.target.selectedIndex)}>
         {movies.map((movie, index) => (
           <option
             key={movie.name}

@@ -2,13 +2,13 @@ import React from 'react';
 import SeatRow from './SeatRow';
 import Seat from './Seat';
 
-const Seats = ({ selectedSeats, occupiedSeats, rowNum, colNum }) => {
+const Seats = ({ selectedSeats, occupiedSeats, rowNum, colNum, onClick }) => {
   return (
     <>
       {Array(rowNum)
         .fill('')
         .map((_, rowIdx) => (
-          <SeatRow>
+          <SeatRow key={rowIdx}>
             {Array(colNum)
               .fill('')
               .map((_, colIdx) => {
@@ -19,7 +19,14 @@ const Seats = ({ selectedSeats, occupiedSeats, rowNum, colNum }) => {
                 } else if (selectedSeats.includes(seatIdx)) {
                   type = 'selected';
                 }
-                return <Seat type={type} />;
+                return (
+                  <Seat
+                    key={colIdx}
+                    type={type}
+                    onClick={onClick}
+                    seatIdx={seatIdx}
+                  />
+                );
               })}
           </SeatRow>
         ))}
