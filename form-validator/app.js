@@ -4,77 +4,79 @@ const email = document.querySelector('#email');
 const password = document.querySelector('#password');
 const password2 = document.querySelector('#password2');
 
-form.addEventListener('submit', handleSubmit);
-
-function handleSubmit(e) {
+// Event listener
+form.addEventListener('submit', (e) => {
   e.preventDefault();
 
-  validateUsername();
-  validateEmail();
-  validatePassword();
+  checkRequired([username, email, password, password2]);
+  checkLength(username, 3, 15);
+  checkLength(password, 6, 25);
+  checkEmail(email);
+  checkPasswordsMatch(password, password2);
+});
+
+// Check required fields
+function checkRequired(inputArr) {
+  inputArr.forEach((input) => {
+    if (input.value.trim() === '') {
+      showError(input, `${getFieldName(input)} is required`);
+    } else {
+      showSuccess(input);
+    }
+  });
 }
 
-function showError(inputEl, message) {
-  const formGroup = inputEl.parentElement;
-  formGroup.classList.remove('success');
-  formGroup.classList.add('error');
-  formGroup.querySelector('.error-msg').innerText = message;
+function getFieldName(input) {
+  return input.id.charAt(0).toUpperCase() + input.id.slice(1);
 }
 
-function showSuccess(inputEl) {
-  const formGroup = inputEl.parentElement;
-  formGroup.classList.remove('error');
-  formGroup.classList.add('success');
-  formGroup.querySelector('.error-msg').innerText = '';
+// Check Length
+function checkLength(input, min, max) {
+  if (input.value.length < min) {
+    showError(
+      input,
+      `${getFieldName(input)} must be at least ${min} characters`
+    );
+  } else if (input.value.length > max) {
+    showError(
+      input,
+      `${getFieldName(input)} must be less than ${max} characters`
+    );
+  } else {
+    showSuccess(input);
+  }
 }
 
-function isValidEmailFormat(email) {
+// Check email is valid
+function checkEmail(input) {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
-}
 
-function validateUsername() {
-  const min = 3;
-  const max = 15;
-  if (username.value === '') {
-    showError(username, 'Username is required');
-  } else if (username.value.length < min) {
-    showError(username, `Username must be at least ${min} characters`);
-  } else if (username.value.length > max) {
-    showError(username, `Username must be less than ${max} characters`);
+  if (re.test(String(input.value).toLowerCase())) {
+    showSuccess(input);
   } else {
-    showSuccess(username);
+    showError(input, 'Email is not valid');
   }
 }
 
-function validateEmail() {
-  if (email.value === '') {
-    showError(email, 'Email is required');
-  } else if (!isValidEmailFormat(email.value)) {
-    showError(email, 'Email is not valid');
+// Check passwords match
+function checkPasswordsMatch(input1, input2) {
+  if (input1.value !== input2.value) {
+    showError(input2, 'Password do not match');
   } else {
-    showSuccess(email);
+    showSuccess(input2);
   }
 }
 
-function validatePassword() {
-  const min = 6;
-  const max = 25;
-  if (password.value === '') {
-    showError(password, 'Password is required');
-  } else if (password.value.length < min) {
-    showError(password, `Password must be at least ${min} characters`);
-  } else if (password.value.length > max) {
-    showError(password, `Password must be less than ${max} characters`);
-  } else {
-    showSuccess(password);
-  }
+// Show input error message
+function showError(input, message) {
+  const formControl = input.parentElement;
+  formControl.className = 'form-control error';
+  const small = formControl.querySelector('small');
+  small.innerText = message;
+}
 
-  if (password2.value === '') {
-    showError(password2, 'Confirm password is required');
-  } else if (password.value !== password2.value) {
-    showError(password2, 'different password');
-  } else {
-    showSuccess(password2);
-  }
+// Show success outline
+function showSuccess(input) {
+  const formControl = input.parentElement;
+  formControl.className = 'form-control success';
 }

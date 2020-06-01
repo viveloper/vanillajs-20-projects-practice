@@ -1,101 +1,94 @@
 :root {
-  --successColor: #54db54;
-  --errorColor: #ee3636;
+  --success-color: #2ecc71;
+  --error-color: #e74c3c;
 }
 
 * {
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
 }
+
 body {
-  margin: 0;
+  background-color: #f9fafb;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #eeeeee;
   min-height: 100vh;
+  margin: 0;
 }
 
 .container {
-  width: 400px;
-  height: 560px;
-  padding: 2rem;
   background-color: #fff;
-  border: none;
   border-radius: 5px;
-  -webkit-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.3);
-  box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  width: 400px;
 }
 
-.title {
+h2 {
   text-align: center;
-  text-transform: capitalize;
-  margin-top: 0;
+  margin: 0 0 20px;
 }
 
-.form-group {
+.form {
+  padding: 30px 40px;
+}
+
+.form-control {
+  margin-bottom: 10px;
+  padding-bottom: 20px;
   position: relative;
-  margin-bottom: 2rem;
 }
 
-.form-group label {
+.form-control label {
   display: block;
-  text-transform: capitalize;
-  font-size: 1.2rem;
-  margin-bottom: 0.2rem;
+  color: #777;
+  margin-bottom: 5px;
 }
 
-.form-group input {
+.form-control input {
+  border: 2px solid #f0f0f0;
+  border-radius: 4px;
   display: block;
   width: 100%;
   padding: 10px;
-  font-family: 'Roboto', sans-serif;
-  font-size: 0.9rem;
-  border: 2px solid #ececec;
-  border-radius: 4px;
-  outline: none;
+  font-size: 14px;
 }
 
-.error-msg {
+.form-control input:focus {
+  outline: none;
+  border-color: #777;
+}
+
+.form-control.success input {
+  border-color: var(--success-color);
+}
+
+.form-control.error input {
+  border-color: var(--error-color);
+}
+
+.form-control small {
+  color: var(--error-color);
   position: absolute;
-  top: 100%;
+  bottom: 0;
   left: 0;
-  color: red;
   visibility: hidden;
 }
 
-.btn-submit {
-  display: block;
-  width: 100%;
-  background-color: #3772ff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  text-transform: capitalize;
-  padding: 12px 0;
-  font-family: 'Roboto', sans-serif;
-  cursor: pointer;
-  transition: opacity 0.2s ease;
-}
-
-.btn-submit:hover {
-  opacity: 0.7;
-}
-
-.form-group.error input {
-  border: 2px solid var(--errorColor);
-}
-
-.form-group.error .error-msg {
+.form-control.error small {
   visibility: visible;
 }
 
-.form-group.success input {
-  border: 2px solid var(--successColor);
-}
-
-.form-group.success .error-msg {
-  visibility: hidden;
+.form button {
+  cursor: pointer;
+  background-color: #3498db;
+  border: 2px solid #3498db;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 16px;
+  display: block;
+  padding: 10px;
+  margin-top: 20px;
+  width: 100%;
 }
